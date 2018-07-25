@@ -1,6 +1,6 @@
-# whitehall
+# Whitehall
 
-whitehall is a Ruby on Rails content management application for content published by government departments and agencies.
+Whitehall is a Ruby on Rails content management application for content published by government departments and agencies.
 
 ## Nomenclature
 
