@@ -17,6 +17,35 @@ class AttachmentDraftStatusIntegrationTest < ActionDispatch::IntegrationTest
     stub_whitehall_asset(filename, id: asset_id, draft: asset_initially_draft)
   end
 
+  context 'given a file attachment added after unpublishing' do
+    let(:file) { File.open(path_to_attachment(filename)) }
+    let(:attachment) { build(:file_attachment, attachable: attachable, file: file) }
+    let(:attachable) { edition }
+
+    before do
+      setup_publishing_api_for(edition)
+    end
+
+    context 'on a draft document' do
+      let(:edition) { create(:news_article) }
+      let(:asset_initially_draft) { true }
+
+      it 'marks attachment as draft in Asset Manager when document is unpublished then attachment added' do
+        stub_publishing_api_expanded_links_with_taxons(edition.content_id, [])
+        stub_publishing_api_links_with_taxons(edition.content_id, [topic_taxon["content_id"]])
+
+        visit admin_news_article_path(edition)
+        force_publish_document
+        visit admin_news_article_path(edition)
+        unpublish_document_published_in_error
+        attachable.attachments << attachment
+        attachable.save!
+        assert_sets_draft_status_in_asset_manager_to true
+      end
+    end
+  end
+
+
   context 'given a file attachment' do
     let(:file) { File.open(path_to_attachment(filename)) }
     let(:attachment) { build(:file_attachment, attachable: attachable, file: file) }

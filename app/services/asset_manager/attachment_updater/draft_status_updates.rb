@@ -1,6 +1,7 @@
 class AssetManager::AttachmentUpdater::DraftStatusUpdates
   def self.call(attachment_data)
-    draft = attachment_data.draft? && !attachment_data.unpublished? && !attachment_data.replaced?
+    draft = (attachment_data.draft? && !attachment_data.unpublished? && !attachment_data.replaced?) || (attachment_data.draft? && attachment_data.unpublished? && !attachment_data.present_at_unpublish? && !attachment_data.replaced?)
+    draft = false
 
     Enumerator.new do |enum|
       enum.yield AssetManager::AttachmentUpdater::Update.new(
