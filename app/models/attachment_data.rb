@@ -146,10 +146,6 @@ class AttachmentData < ApplicationRecord
     self[:present_at_unpublish]
   end
 
-  def present_at_unpublish=(val)
-    write_attribute(:present_at_unpublish, val)
-  end
-
   def replaced?
     replaced_by.present?
   end
