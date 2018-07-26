@@ -120,10 +120,8 @@ class AttachmentData < ApplicationRecord
 
   def draft?
     if unpublished?
-      puts "here in draft unpub"
       true unless present_at_unpublish?
     else
-      puts "here in draft no unpub"
       !significant_attachable.publicly_visible?
     end
   end
