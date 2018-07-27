@@ -40,8 +40,8 @@ class AttachmentRedirectDueToUnpublishingIntegrationTest < ActionDispatch::Integ
       puts attachment.attachment_data.inspect
       unpublish_document_published_in_error
       logout
-      get attachment.reload.url
-      puts attachment.reload.url
+      get attachment.url
+      puts attachment.url
       puts attachment.inspect
       puts attachment.attachment_data.inspect
       puts attachment.attachment_data.draft?
@@ -57,7 +57,7 @@ class AttachmentRedirectDueToUnpublishingIntegrationTest < ActionDispatch::Integ
       visit admin_news_article_path(edition)
       consolidate_document
       logout
-      get attachment.reload.url
+      get attachment.url
       assert_redirected_to redirect_path
       assert_sets_redirect_url_in_asset_manager_to redirect_url
     end
@@ -68,7 +68,7 @@ class AttachmentRedirectDueToUnpublishingIntegrationTest < ActionDispatch::Integ
       visit admin_news_article_path(edition)
       withdraw_document
       logout
-      get attachment.reload.url
+      get attachment.url
       assert_response :success
       refute_sets_redirect_url_in_asset_manager
     end
@@ -85,7 +85,7 @@ class AttachmentRedirectDueToUnpublishingIntegrationTest < ActionDispatch::Integ
       visit admin_consultation_path(edition)
       unpublish_document_published_in_error
       logout
-      get attachment.reload.url
+      get attachment.url
       assert_redirected_to redirect_path
       assert_sets_redirect_url_in_asset_manager_to redirect_url
     end
@@ -96,7 +96,7 @@ class AttachmentRedirectDueToUnpublishingIntegrationTest < ActionDispatch::Integ
       visit admin_consultation_path(edition)
       withdraw_document
       logout
-      get attachment.reload.url
+      get attachment.url
       assert_response :success
       refute_sets_redirect_url_in_asset_manager
     end
@@ -113,7 +113,7 @@ class AttachmentRedirectDueToUnpublishingIntegrationTest < ActionDispatch::Integ
       visit admin_consultation_path(edition)
       unpublish_document_published_in_error
       logout
-      get attachment.reload.url
+      get attachment.url
       assert_redirected_to redirect_path
       assert_sets_redirect_url_in_asset_manager_to redirect_url
     end
@@ -124,7 +124,7 @@ class AttachmentRedirectDueToUnpublishingIntegrationTest < ActionDispatch::Integ
       visit admin_consultation_path(edition)
       withdraw_document
       logout
-      get attachment.reload.url
+      get attachment.url
       assert_response :success
       refute_sets_redirect_url_in_asset_manager
     end
@@ -140,7 +140,7 @@ class AttachmentRedirectDueToUnpublishingIntegrationTest < ActionDispatch::Integ
       visit admin_news_article_path(edition)
       force_publish_document
       logout
-      get attachment.reload.url
+      get attachment.url
       assert_response :success
       assert_sets_redirect_url_in_asset_manager_to nil
     end
@@ -158,7 +158,7 @@ class AttachmentRedirectDueToUnpublishingIntegrationTest < ActionDispatch::Integ
       visit admin_consultation_path(edition)
       force_publish_document
       logout
-      get attachment.reload.url
+      get attachment.url
       assert_response :success
       assert_sets_redirect_url_in_asset_manager_to nil
     end
@@ -173,7 +173,7 @@ class AttachmentRedirectDueToUnpublishingIntegrationTest < ActionDispatch::Integ
       visit admin_news_article_path(edition)
       unwithdraw_document
       logout
-      get attachment.reload.url
+      get attachment.url
       assert_response :success
       assert_sets_redirect_url_in_asset_manager_to nil
     end
@@ -190,7 +190,7 @@ class AttachmentRedirectDueToUnpublishingIntegrationTest < ActionDispatch::Integ
       visit admin_consultation_path(edition)
       unwithdraw_document
       logout
-      get attachment.reload.url
+      get attachment.url
       assert_response :success
       assert_sets_redirect_url_in_asset_manager_to nil
     end
