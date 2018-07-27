@@ -23,8 +23,8 @@ Whitehall.edition_services.tap do |coordinator|
     ServiceListeners::AttachmentRedirectUrlUpdater.call(attachable: edition)
 
     # Update unpublish status
-    ServiceListeners::AttachmentPresentAtUnpublishUpdater.call(attachable: edition)
-  end
+    ServiceListeners::AttachmentPresentAtUnpublishUpdater.call(attachable: edition, value: true)
+ end
 
   coordinator.subscribe(/^(force_publish|publish|unwithdraw)$/) do |_event, edition, options|
     # handling edition's dependency on other content
@@ -47,6 +47,9 @@ Whitehall.edition_services.tap do |coordinator|
 
     # Update attachment redirect urls
     ServiceListeners::AttachmentRedirectUrlUpdater.call(attachable: edition)
+
+    # Update unpublish status
+    ServiceListeners::AttachmentPresentAtUnpublishUpdater.call(attachable: edition, value: false)
   end
 
   coordinator.subscribe(/^(force_publish|publish|withdraw|unwithdraw)$/) do |_event, edition, _options|

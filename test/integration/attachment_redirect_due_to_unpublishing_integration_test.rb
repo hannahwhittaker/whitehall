@@ -39,6 +39,9 @@ class AttachmentRedirectDueToUnpublishingIntegrationTest < ActionDispatch::Integ
       unpublish_document_published_in_error
       logout
       get attachment.url
+      puts attachment.inspect
+      puts attachment.attachment_data.inspect
+      puts attachment.attachment_data.draft?
       assert_redirected_to redirect_path
       assert_sets_redirect_url_in_asset_manager_to redirect_url
     end
