@@ -119,11 +119,11 @@ class AttachmentData < ApplicationRecord
   end
 
   def draft?
-    if unpublished?
-      true unless present_at_unpublish?
-    else
+  #  if unpublished?
+  #    true unless present_at_unpublish?
+  #  else
       !significant_attachable.publicly_visible?
-    end
+  #  end
   end
 
   def accessible_to?(user)
