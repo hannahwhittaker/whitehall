@@ -14,10 +14,9 @@ class LocalisedModel < BasicObject
     end
   end
 
-  # rubocop:disable Style/MethodMissingSuper
-  # rubocop:disable Style/MissingRespondToMissing
-
   def method_missing(method, *args, &block)
+    super unless @model.__send__(:respond_to_missing?, method, args)
+
     ::I18n.with_locale @fixed_locale do
       response = @model.__send__(method, *args, &block)
 
@@ -30,8 +29,9 @@ class LocalisedModel < BasicObject
     end
   end
 
-  # rubocop:enable Style/MethodMissingSuper
-  # rubocop:enable Style/MissingRespondToMissing
+  def respond_to_missing?(method, *args)
+    @model.__send__(:respond_to_missing?, method, args) || super
+  end
 
   # Rails calls this a lot in form builder code. By default #to_model will
   # revert our localised model back to the standard model, so we override it
