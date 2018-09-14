@@ -14,9 +14,9 @@ class LocalisedModel < BasicObject
     end
   end
 
-  def method_missing(method, *args, &block)
-    super unless @model.__send__(:respond_to_missing?, method, args)
+  # rubocop:disable Style/MethodMissingSuper
 
+  def method_missing(method, *args, &block)
     ::I18n.with_locale @fixed_locale do
       response = @model.__send__(method, *args, &block)
 
@@ -28,6 +28,8 @@ class LocalisedModel < BasicObject
       response
     end
   end
+
+  # rubocop:enable Style/MethodMissingSuper
 
   def respond_to_missing?(method, *args)
     @model.__send__(:respond_to_missing?, method, args) || super
